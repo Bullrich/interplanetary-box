@@ -1,3 +1,4 @@
+import { encrypt } from "./utils/encrypt";
 import bodyParser from "body-parser";
 import cors from "cors";
 import "dotenv/config";
@@ -17,6 +18,14 @@ app.use(jsonParser);
 
 app.use("/api/health", (_, res) => {
     res.send("Ok");
+});
+
+app.get("/api/encrypt", (req, res) => {
+    const key = req.query.key as string;
+    const data = req.query.data as string;
+
+    const encryptedData = encrypt(key, data);
+    return res.send(encryptedData);
 });
 
 app.get("/api/cache", (req, res) => {
