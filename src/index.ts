@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import NodeCache from "node-cache";
+import path from "path";
 
 const app = express();
 
@@ -31,6 +32,10 @@ app.get("/api/cache", (req, res) => {
         return res.send("cached!");
     }
 });
+
+app.use("/", express.static("./client/dist"));
+
+app.get("*", (_, res) => res.sendFile(path.resolve("client", "dist", "index.html")));
 
 const port = process.env.PORT || 4000;
 
