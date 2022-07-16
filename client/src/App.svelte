@@ -1,43 +1,45 @@
 <script lang="ts">
-  import logo from './assets/svelte.png'
-import Encrypter from './lib/components/Encrypter.svelte';
-import FileUpload from './lib/components/FileUpload.svelte';
-  import Counter from './lib/Counter.svelte'
-import Encrypt from './lib/Encrypt.svelte';
+  import logo from "./assets/svelte.png";
+  import Encrypter from "./lib/components/Encrypter.svelte";
+  import FileUpload from "./lib/components/FileUpload.svelte";
+  import Counter from "./lib/Counter.svelte";
+  import Encrypt from "./lib/Encrypt.svelte";
+  import NavBar from "./lib/components/NavBar.svelte";
+  import Dashboard from "./lib/pages/Dashboard.svelte";
 </script>
 
+<svelte:head>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+  />
+</svelte:head>
+
 <main>
+  <NavBar />
   <img src={logo} alt="Svelte Logo" />
   <h1>Hello Typescript!</h1>
 
-  <Encrypter/>
+  <Dashboard />
 
-  <Encrypt/>
+  <br />
+  <hr />
 
-  <FileUpload/>
+  <Encrypter />
 
-  <Counter />
+  <Encrypt />
 
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
+  <FileUpload />
 </main>
 
 <style>
   :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 
   main {
     text-align: center;
-    padding: 1em;
     margin: 0 auto;
   }
 
@@ -54,21 +56,5 @@ import Encrypt from './lib/Encrypt.svelte';
     line-height: 1.1;
     margin: 2rem auto;
     max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
   }
 </style>
