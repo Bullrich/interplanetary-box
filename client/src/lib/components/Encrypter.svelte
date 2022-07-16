@@ -4,7 +4,8 @@
     let pureFile, encryptedFile: FileList;
     let key: string;
 
-    async function encrypt() {
+    async function encrypt(e: Event) {
+        e.preventDefault();
         const file = pureFile[0];
         console.log(file);
         const encryptedFile = await encryptData(file, key);
@@ -17,7 +18,9 @@
         a.click();
     }
 
-    async function decrypt() {
+    async function decrypt(e: Event) {
+        e.preventDefault();
+        console.log("ho");
         const file = encryptedFile[0];
         const decryptedFile = await decryptData(file, key);
         console.log("decryptedFile", decryptedFile);
@@ -25,12 +28,8 @@
         var a = document.createElement("a");
         console.log(decryptedFile);
         a.setAttribute("href", decryptedFile);
-        a.target = "_blank";
-        a.setAttribute("onclick", "return false;");
         a.setAttribute("download", file.name.replace(".encrypted", ""));
-        console.log(a);
         a.click();
-        // window.open(url, '_self');
     }
 </script>
 
@@ -42,11 +41,9 @@
         <input type="file" id="pure" bind:files={pureFile} />
         <button on:click={encrypt}>Encrypt</button>
         <br />
-        <a target="_blank" href="https://google.com">a</a>
 
         <label for="pure">File to encrypt</label>
         <input type="file" id="pure" bind:files={encryptedFile} />
-        <button on:click={decrypt} accept=".encrypted">Dencrypt</button>
-        <!-- <input type="submit" /> -->
+        <button on:click={decrypt} accept=".encrypted">Decrypt</button>
     </form>
 </div>
