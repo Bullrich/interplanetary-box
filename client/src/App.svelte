@@ -1,11 +1,20 @@
 <script lang="ts">
   import logo from './assets/svelte.png'
+import Encrypter from './lib/components/Encrypter.svelte';
+import FileUpload from './lib/components/FileUpload.svelte';
   import Counter from './lib/Counter.svelte'
+import Encrypt from './lib/Encrypt.svelte';
 </script>
 
 <main>
   <img src={logo} alt="Svelte Logo" />
   <h1>Hello Typescript!</h1>
+
+  <Encrypter/>
+
+  <Encrypt/>
+
+  <FileUpload/>
 
   <Counter />
 
