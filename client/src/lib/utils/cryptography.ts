@@ -1,5 +1,5 @@
 import AES from "crypto-js/aes";
-import {enc} from "crypto-js"
+import { enc } from "crypto-js"
 
 export const encryptData = (file: File, key: string): Promise<string> => {
     const reader = new FileReader();
@@ -37,4 +37,12 @@ export const decryptData = (file: File, key: string): Promise<string> => {
         }
         reader.readAsText(file);
     });
+}
+
+export const decryptString = (text: string, key: string): string => {
+    if (!key) {
+        throw new Error("Key is missing");
+    }
+
+    return AES.decrypt(text, key).toString(enc.Latin1);
 }

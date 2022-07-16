@@ -1,13 +1,13 @@
-import { encrypt } from "./utils/encrypt";
 import bodyParser from "body-parser";
 import cors from "cors";
+import crypto from "crypto";
 import "dotenv/config";
 import express from "express";
+import fileUpload from "express-fileupload";
 import NodeCache from "node-cache";
 import path from "path";
-import crypto from "crypto";
-import fs from "fs";
-import fileUpload from "express-fileupload";
+import { encrypt } from "./utils/encrypt";
+import { storeFile } from "./utils/ipfs";
 
 const app = express();
 
@@ -53,7 +53,7 @@ app.get("/api/cache", (req, res) => {
     }
 });
 
-app.post("/api/upload", (req, res) => {
+app.post("/api/upload", async (req, res) => {
     console.log("f", req.files?.files, req.files);
         if (!req.files || Object.keys(req.files).length === 0) {
             console.log("WHEWRE ARE THE FILES");
@@ -63,20 +63,9 @@ app.post("/api/upload", (req, res) => {
         // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
         const file = req.files.files as fileUpload.UploadedFile;
 
-        console.log("file", file?.name, file?.size, file?.tempFilePath);
-        
-        const keyFile = req.files.key as fileUpload.UploadedFile;
-        
-        const key = fs.readFileSync(keyFile.tempFilePath, "utf-8");
-        console.log("content", key);
+        const cid = await storeFile(file.tempFilePath);
 
-        const encryptedFile = fs.readFileSync(file.tempFilePath).toString();
-          
-        console.log("encryptedFile", encryptedFile);
-
-        console.log("received", file);
-
-        return res.send("ok");
+        return res.send(cid);
 
         // Use the mv() method to place the file somewhere on your server
         // sampleFile.mv("/somewhere/on/your/server/filename.jpg", function(err) {

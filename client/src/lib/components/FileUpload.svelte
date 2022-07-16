@@ -1,44 +1,60 @@
 <script lang="ts">
   import axios from "axios";
-  import { serverUrl } from "../utils/server";
-  import { getPublicKey } from "../utils/walletUtils";
-  import {encryptData} from "../utils/cryptography";
+  import e from "cors";
+  import { decryptString } from "../utils/cryptography";
 
-  let postVar;
+  import { encryptAndUpload } from "../utils/uploader";
+  import { getPublicKey } from "../utils/walletUtils";
+
   let fileVar: FileList;
-  let key: string;
+
+  const key = "javier";
+  let hashes: { file: string; hash: string }[] = [];
 
   async function submitForm(event: Event) {
     event.preventDefault();
-    if (!key) key = await getPublicKey();
-
-    const dataArray = new FormData();
-    dataArray.append("superHeroName", postVar);
     const file = fileVar[0];
-    console.log(file);
-    const encryptedFile = encryptData(file, "abcdefg");
-    console.log(encryptedFile);
-    
-    dataArray.append("files", file);
-    console.log(key);
-    var blob = new Blob([key], { type: "text/xml"});
-    dataArray.append("key", blob);
-    dataArray.append("name", key);
+    const cid = await encryptAndUpload(file, key);
+    hashes.push({ file: file.name, hash: cid });
 
-    axios.post(`${serverUrl}upload`, dataArray, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    console.log("cid", cid);
+    hashes = hashes;
+  }
+
+  async function downloadFileFromHash(e: Event, hashData: { file: string; hash: string }) {
+    console.log("yes!");
+    e.preventDefault();
+    const { data } = await axios.get<string>(
+      `https://${hashData.hash}.ipfs.nftstorage.link/`
+    );
+    if (!data) {
+      throw new Error("No data!");
+    }
+    const decryptedFile = await decryptString(data, key);
+    console.log("decryptedFile", decryptedFile);
+
+    var a = document.createElement("a");
+    console.log(decryptedFile);
+    a.setAttribute("href", decryptedFile);
+    a.setAttribute("download", hashData.file);
+    console.log(a);
+    a.click();
   }
 </script>
 
 <div>
   <form on:submit={submitForm}>
-    <input type="text" bind:value={postVar} placeholder={"Superhero Name"} />
-    <br />
     <input type="file" bind:files={fileVar} />
     <br />
+    Submit
     <input type="submit" />
+    <br />
   </form>
+  {#each hashes as hash}
+    <br />
+    <input type="text" disabled value={hash.hash} />
+    <button on:click={(e) => downloadFileFromHash(e, hash)}>
+      Download {hash.file}
+    </button>
+  {/each}
 </div>
