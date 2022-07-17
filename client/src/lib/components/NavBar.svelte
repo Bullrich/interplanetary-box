@@ -2,7 +2,7 @@
     import {
     Button,Collapse,Nav,Navbar,NavbarBrand,NavbarToggler,NavItem
     } from "sveltestrap";
-    import { provider } from "../stores/wallet";
+    import { wallet } from "../stores/wallet";
 
     let isOpen = false;
 
@@ -19,15 +19,15 @@
     <NavbarToggler on:click={() => (isOpen = !isOpen)} />
     <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
         <Nav class="ms-auto" navbar>
-            {#if $provider}
+            {#if $wallet}
                 <NavItem>
                     <Button color="light" >
-                        Create {$provider.address}
+                        Create {$wallet.address}
                     </Button>
                 </NavItem>
             {:else}
                 <NavItem>
-                    <Button color="light" on:click={() => provider.signIn()}>
+                    <Button color="light" on:click={() => wallet.signIn()}>
                         Connect Wallet
                     </Button>
                 </NavItem>
