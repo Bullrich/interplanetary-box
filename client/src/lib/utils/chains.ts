@@ -8,7 +8,8 @@ export const Chains = {
     BOBA: 28,
     SKALE: 344435,
     RINKEBY: 4,
-    ROPSTEN: 3
+    ROPSTEN: 3,
+    OPTIMISM_KOVAN: 69
 }
 
 interface ChainData {
@@ -33,8 +34,15 @@ const chainData: Map<number, ChainData> = new Map<number, ChainData>([[
         nativeCurrency: { name: 'MATIC', decimals: 18, symbol: 'MATIC' },
         rpcUrls: ['https://rpc-mumbai.matic.today'],
         blockExplorerUrls: ['https://mumbai.polygonscan.com/']
-    }
-]]);
+    }],
+    [Chains.OPTIMISM_KOVAN, {
+        chainName: 'Optimism Kovan',
+        chainId: ethers.utils.hexValue(Chains.OPTIMISM_KOVAN),
+        nativeCurrency: { name: 'ETH', decimals: 18, symbol: 'ETH' },
+        rpcUrls: ['https://kovan.optimism.io'],
+        blockExplorerUrls: ['https://kovan-optimistic.etherscan.io/']
+    }]
+]);
 
 export const changeNetwork = async (chainId: number): Promise<void> => {
     return new Promise((res, rej) => {
