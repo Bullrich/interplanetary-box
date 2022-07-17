@@ -1,9 +1,5 @@
 <script lang="ts">
   import logo from "./assets/svelte.png";
-  import Encrypter from "./lib/components/Encrypter.svelte";
-  import FileUpload from "./lib/components/FileUpload.svelte";
-  import Counter from "./lib/Counter.svelte";
-  import Encrypt from "./lib/Encrypt.svelte";
   import NavBar from "./lib/components/NavBar.svelte";
   import Dashboard from "./lib/pages/Dashboard.svelte";
 </script>
@@ -18,18 +14,9 @@
 <main>
   <NavBar />
   <img src={logo} alt="Svelte Logo" />
-  <h1>Hello Typescript!</h1>
+  <h1>Interplanetary Box</h1>
 
   <Dashboard />
-
-  <br />
-  <hr />
-
-  <Encrypter />
-
-  <Encrypt />
-
-  <FileUpload />
 </main>
 
 <style>
@@ -56,5 +43,6 @@
     line-height: 1.1;
     margin: 2rem auto;
     max-width: 14rem;
+    text-align: center;
   }
 </style>
