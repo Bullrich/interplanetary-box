@@ -23,3 +23,14 @@ export const encryptAndUpload = async (file: File, key: string) => {
 
     return data.data;
 }
+
+export const generateEncryptionKey = async(publicKey:string):Promise<string> => {
+    const obj = JSON.stringify({key:publicKey});
+    const data = await axios.post<string>(`${serverUrl}encrypt`, obj, {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+    console.log(data);
+    return data.data;
+}
