@@ -9,3 +9,16 @@ export async function getPublicKey(): Promise<string> {
     });
     return key;
 }
+
+export async function decryptMessage(message: string): Promise<string> {
+    const accounts = await window.ethereum.request({
+        method: "eth_requestAccounts",
+    });
+    const decryptedMessage = await window.ethereum
+        .request({
+            method: 'eth_decrypt',
+            params: [message, accounts[0]],
+        });
+    return decryptedMessage;
+
+}
