@@ -30,7 +30,7 @@ app.use("/api/health", (_, res) => {
 });
 
 app.post("/api/encrypt", (req, res) => {
-    const data = req.body as {data:string, key:string};
+    const data = req.body as {key:string};
 
     const id = crypto.randomUUID();
 
