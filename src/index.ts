@@ -35,7 +35,6 @@ app.post("/api/encrypt", (req, res) => {
     const id = crypto.randomUUID();
 
     const encryptedData = encrypt(id, data.key);
-    console.log("encryptedData", encryptedData, id);
     return res.send(encryptedData);
 });
 
@@ -54,25 +53,15 @@ app.get("/api/cache", (req, res) => {
 });
 
 app.post("/api/upload", async (req, res) => {
-    console.log("f", req.files?.files, req.files);
         if (!req.files || Object.keys(req.files).length === 0) {
-            console.log("WHEWRE ARE THE FILES");
             return res.status(400).send("No files were uploaded.");
         }
 
-        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
         const file = req.files.files as fileUpload.UploadedFile;
 
         const cid = await storeFile(file.tempFilePath);
 
         return res.send(cid);
-
-        // Use the mv() method to place the file somewhere on your server
-        // sampleFile.mv("/somewhere/on/your/server/filename.jpg", function(err) {
-        //   if (err)
-        //     return res.status(500).send(err);
-        //   res.send("File uploaded!");
-        // });
     });
 
 app.use("/", express.static("./client/dist"));
