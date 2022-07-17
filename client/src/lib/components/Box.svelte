@@ -8,7 +8,6 @@
     export let box: InterplanetaryBox;
     let filesPromise = box.getFiles();
     let encryptionKey: string;
-    let fileVar: FileList;
 
     async function getKey(): Promise<string> {
         if (!encryptionKey) {
