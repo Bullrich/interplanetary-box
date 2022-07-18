@@ -6,7 +6,7 @@
 
     let isOpen = false;
 
-    function handleUpdate(event) {
+    function handleUpdate(event:any) {
         isOpen = event.detail.isOpen;
     }
 </script>
@@ -22,7 +22,7 @@
             {#if $wallet}
                 <NavItem>
                     <Button color="light" >
-                        Create {$wallet.address}
+                        Create {$wallet}
                     </Button>
                 </NavItem>
             {:else}

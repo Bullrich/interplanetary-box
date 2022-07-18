@@ -27,7 +27,7 @@
         }
         loadingMessage = "Decrypting message";
         const encryptionKey = await getKey();
-        const decryptedFile = await decryptString(data, encryptionKey);
+        const decryptedFile = decryptString(data, encryptionKey);
 
         var a = document.createElement("a");
         console.log(decryptedFile);
