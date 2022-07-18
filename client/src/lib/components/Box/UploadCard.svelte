@@ -1,6 +1,6 @@
 <script lang="ts">
     import { fly } from "svelte/transition";
-    import { encryptAndUpload } from "../../utils/uploader";
+    import { encryptAndUpload } from "../../utils/api";
 
     import { chainToUse } from "../../config";
     import {
