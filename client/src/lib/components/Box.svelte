@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { Col, Container, Row } from "sveltestrap";
+    import { slide } from "svelte/transition";
+    import { Col, Container, Row, Spinner } from "sveltestrap";
     import type { InterplanetaryBox } from "../contracts/contracts/InterplanetaryBox";
     import { decryptMessage } from "../utils/walletUtils";
     import DownloadCard from "./Box/DownloadCard.svelte";
@@ -20,21 +21,25 @@
 
 <Container>
     {#await filesPromise}
-        <h5>Loading files from the smart contract</h5>
+        <h3>Loading files from the smart contract</h3>
+        <br />
+        <Spinner />
     {:then files}
-        <Row>
-            <Col>
-                <UploadCard
-                    {box}
-                    {getKey}
-                    onUpload={() => (filesPromise = box.getFiles())}
-                />
-            </Col>
-            {#each files as file}
-                <Col>
-                    <DownloadCard {box} fileName={file} {getKey} />
+        <div transition:slide={{ duration: 1000 }}>
+            <Row>
+                <Col sm={3}>
+                    <UploadCard
+                        {box}
+                        {getKey}
+                        onUpload={() => (filesPromise = box.getFiles())}
+                    />
                 </Col>
-            {/each}
-        </Row>
+                {#each files as file}
+                    <Col sm={3}>
+                        <DownloadCard {box} fileName={file} {getKey} />
+                    </Col>
+                {/each}
+            </Row>
+        </div>
     {/await}
 </Container>
