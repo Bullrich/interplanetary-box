@@ -1,6 +1,6 @@
 import axios from "axios";
+import { serverUrl } from "../config";
 import { encryptData } from "./cryptography";
-import { serverUrl } from "./server";
 
 export const encryptAndUpload = async (file: File, key: string) => {
     if (file.size > 1024 * 1024) {

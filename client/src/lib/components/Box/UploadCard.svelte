@@ -2,15 +2,17 @@
     import { fly } from "svelte/transition";
     import { encryptAndUpload } from "../../utils/uploader";
 
+    import { chainToUse } from "../../config";
     import {
-    Button,
-    Card,
-    CardBody,
-    CardHeader,
-    CardTitle,
-    Input
+        Button,
+        Card,
+        CardBody,
+        CardHeader,
+        CardTitle,
+        Input,
     } from "sveltestrap";
     import type { InterplanetaryBox } from "../../contracts/contracts/InterplanetaryBox";
+    import { changeNetwork } from "../../utils/chains";
 
     export let getKey: () => Promise<string>;
     export let onUpload: () => void;
@@ -21,6 +23,7 @@
 
     async function uploadFile() {
         const file = fileVar[0];
+        await changeNetwork(chainToUse);
         loadingMessage = "Encrypting file";
         const key = await getKey();
         loadingMessage = "Uploading file";

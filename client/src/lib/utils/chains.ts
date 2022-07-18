@@ -32,7 +32,7 @@ const chainData: Map<number, ChainData> = new Map<number, ChainData>([[
         chainName: 'Polygon Mumbai',
         chainId: ethers.utils.hexValue(Chains.MUMBAI),
         nativeCurrency: { name: 'MATIC', decimals: 18, symbol: 'MATIC' },
-        rpcUrls: ['https://rpc-mumbai.matic.today'],
+        rpcUrls: ['https://matic-mumbai.chainstacklabs.com'],
         blockExplorerUrls: ['https://mumbai.polygonscan.com/']
     }],
     [Chains.OPTIMISM_KOVAN, {
@@ -56,6 +56,7 @@ export const changeNetwork = async (chainId: number): Promise<void> => {
             .catch(err => {
                 // This error code indicates that the chain has not been added to MetaMask
                 if (err.code !== 4902) {
+                    console.warn("Could not connect to chain", chainId);
                     return rej(err);
                 }
                 const parameters = chainData.get(chainId);
@@ -66,7 +67,10 @@ export const changeNetwork = async (chainId: number): Promise<void> => {
                     method: 'wallet_addEthereumChain',
                     params: [parameters]
                 }).then(() => res())
-                    .catch(e => rej(e));
+                    .catch(e => {
+                        console.error("Problem installing chain", chainId);
+                        rej(e)
+                    });
             });
     });
 }
