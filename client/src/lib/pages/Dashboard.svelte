@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fly } from "svelte/transition";
 
-    import { Button, Container, Spinner } from "sveltestrap";
+    import { Button, Card, CardBody, Container, Spinner } from "sveltestrap";
     import Box from "../components/Box.svelte";
     import type { InterplanetaryBox } from "../contracts";
     import { wallet } from "../stores/wallet";
@@ -23,9 +23,13 @@
     }
 </script>
 
-<Container>
+<Container style="margin-top: 50px; min-height: 80vh;">
     {#if $wallet}
         {#if !box}
+        <Card>
+            <CardBody>
+                <h2>You don't have any deployed box</h2>
+                <h4>Deploy your box and start storing your files</h4>
             <Button
                 on:click={() => loadDeployContract()}
                 disabled={message != "Deploy box"}
@@ -34,6 +38,8 @@
                     <div in:fly={{ y: -20 }}>{message}</div>
                 {/key}
             </Button>
+            </CardBody>
+        </Card>
         {:else}
             {#await box}
                 <div transition:fly={{ y: 200, duration: 200 }}>

@@ -1,37 +1,42 @@
 <script lang="ts">
     import {
-    Button,Collapse,Nav,Navbar,NavbarBrand,NavbarToggler,NavItem
+        Button,
+        Collapse,
+        Nav,
+        Navbar,
+        NavbarBrand,
+        NavbarToggler,
+        NavItem,
     } from "sveltestrap";
     import { wallet } from "../stores/wallet";
+    import logo from "../../assets/logo.svg";
+    import ConnectWallet from "./ConnectWallet.svelte";
 
     let isOpen = false;
 
-    function handleUpdate(event:any) {
+    function handleUpdate(event: any) {
         isOpen = event.detail.isOpen;
     }
 </script>
 
 <Navbar color="light" light expand="md">
     <NavbarBrand href="/">
-        <img alt="logo" />
+        <img alt="logo" src={logo} height="32px" />
+        Interplanetary Box
     </NavbarBrand>
 
     <NavbarToggler on:click={() => (isOpen = !isOpen)} />
     <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
         <Nav class="ms-auto" navbar>
-            {#if $wallet}
-                <NavItem>
-                    <Button color="light" >
-                        Create {$wallet}
+            <NavItem>
+                {#if $wallet}
+                    <Button disabled>
+                        Wallet connected
                     </Button>
-                </NavItem>
-            {:else}
-                <NavItem>
-                    <Button color="light" on:click={() => wallet.signIn()}>
-                        Connect Wallet
-                    </Button>
-                </NavItem>
-            {/if}
+                {:else}
+                    <ConnectWallet />
+                {/if}
+            </NavItem>
         </Nav>
     </Collapse>
 </Navbar>

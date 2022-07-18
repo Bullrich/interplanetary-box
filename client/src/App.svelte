@@ -1,7 +1,9 @@
 <script lang="ts">
-  import logo from "./assets/svelte.png";
+  import Footer from "./lib/components/Footer.svelte";
   import NavBar from "./lib/components/NavBar.svelte";
   import Dashboard from "./lib/pages/Dashboard.svelte";
+  import Landing from "./lib/pages/Landing.svelte";
+  import { wallet } from "./lib/stores/wallet";
 </script>
 
 <svelte:head>
@@ -13,10 +15,12 @@
 
 <main>
   <NavBar />
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Interplanetary Box</h1>
-
-  <Dashboard />
+  {#if !$wallet}
+    <Landing />
+  {:else}
+    <Dashboard />
+  {/if}
+  <Footer />
 </main>
 
 <style>
@@ -28,21 +32,5 @@
   main {
     text-align: center;
     margin: 0 auto;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-    text-align: center;
   }
 </style>
