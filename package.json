@@ -9,11 +9,12 @@
   },
   "scripts": {
     "build": "tsc",
-    "postinstall": "npm --prefix client install",
+    "preinstall": "npm --prefix client install",
     "dev": "nodemon --exec ts-node src/index.ts & npm run --prefix client dev",
     "start": "node ./dist/index.js",
     "lint": "eslint --ext .js,.ts .",
-    "prebuild": "npm run --prefix client build"
+    "prebuild": "npm run --prefix client build",
+    "postinstall": "prisma generate"
   },
   "repository": {
     "type": "git",
@@ -30,14 +31,14 @@
   "homepage": "https://github.com/Bullrich/interplanetary-box#readme",
   "dependencies": {
     "@metamask/eth-sig-util": "^4.0.1",
+    "@prisma/client": "^4.0.0",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "ethereumjs-util": "^7.1.5",
     "express": "^4.18.1",
     "express-fileupload": "^1.4.0",
-    "nft.storage": "^6.4.0",
-    "node-cache": "^5.1.2"
+    "nft.storage": "^6.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
@@ -47,6 +48,7 @@
     "@typescript-eslint/parser": "^5.30.6",
     "eslint-plugin-import": "^2.26.0",
     "nodemon": "^2.0.19",
+    "prisma": "^4.0.0",
     "ts-node": "^10.8.2",
     "typescript": "^4.7.4"
   }
