@@ -52,7 +52,7 @@ export const getContractAddress = async (address: string): Promise<string | null
 export const registerContractAddress = async (address: string, contractAddress: string): Promise<void> => {
     const body = JSON.stringify({ address, contract: contractAddress });
     try {
-        const response = await axios.post(`${serverUrl}contract`, body, {
+        await axios.post(`${serverUrl}contract`, body, {
             headers: {
                 "Content-Type": "application/json",
             }
