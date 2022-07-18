@@ -3,6 +3,7 @@
     import { fly } from "svelte/transition";
     import { Button, Card, CardBody, Container, Spinner } from "sveltestrap";
     import Box from "../components/Box.svelte";
+    import { chainToUse } from "../config";
     import {
         InterplanetaryBox,
         InterplanetaryBox__factory,
@@ -13,6 +14,7 @@
         getContractAddress,
         registerContractAddress,
     } from "../utils/api";
+    import { changeNetwork } from "../utils/chains";
     import { deploy } from "../utils/contract";
     import { getPublicKey } from "../utils/walletUtils";
 
@@ -31,6 +33,7 @@
     });
 
     async function fetchContractData(contract: string) {
+        await changeNetwork(chainToUse);
         const wallet = await connectWallet();
         const connectedBox = InterplanetaryBox__factory.connect(
             contract,
