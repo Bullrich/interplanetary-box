@@ -39,7 +39,7 @@ jobs:
           registry-url: https://registry.npmjs.org
       - name: install
         run: npm --prefix client ci
-      - name: check
-        run: npm run --prefix client check
       - name: build
         run: npm run --prefix client build
+      - name: check
+        run: npm run --prefix client check

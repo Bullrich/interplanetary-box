@@ -1,0 +1,31 @@
+name: Valist Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./client
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use node 16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org
+      - name: install
+        run: npm ci
+      - name: build
+        run: npm run build
+      - uses: valist-io/valist-github-action@v2.1.0
+        with:
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          account: javyer
+          project: interplanetary-box
+          release: 0.0.2
+          files: 'build/**'
