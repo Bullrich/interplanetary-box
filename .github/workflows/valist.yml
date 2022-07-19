@@ -25,8 +25,7 @@ jobs:
       - uses: valist-io/valist-github-action@v2.3.1
         with:
           private-key: ${{ secrets.PRIVATE_KEY }}
-          path: '.'
+          path: 'client/dist'
           account: javyer
-          project: interplanetary-box
-          release: 0.0.2
-          files: 'build/**'
+          project: inteplanetary-box
+          release: 0.0.4
