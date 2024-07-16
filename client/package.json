@@ -23,7 +23,7 @@
   "dependencies": {
     "axios": "^0.28.0",
     "crypto-js": "^4.2.0",
-    "ethers": "^5.6.9",
+    "ethers": "^6.13.1",
     "sveltestrap": "^5.9.0"
   }
 }
